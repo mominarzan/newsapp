@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js News</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="header__logo">Node.Js News</div>
+        <%- include('./partials/search.ejs') %>
+    </header>
+
+    <div class="wrapper">
+        <div class="news">
+            <% if(articles != null) { %>
+            <% articles.forEach(function(article, index) { %>
+                <div class="main__card">
+                <a href="/article/<%- article.id %>" class="news__card">
+                    <img src="<%- article.thumbnail_url %>" alt="<%- article.title.rendered %>">
+                    <h2><%- article.title.rendered %></h2>
+                    <p><%- article.excerpt.rendered %></p>
+                    <form action="/articles/<%= article.id %>/like" method="POST" class="d-inline">
+                        <button onclick="done" type="submit" class="btn btn-primary">like</button>
+                      </form>
+                      <br>
+                      <br>
+                      
+                </a>
+                <form action="/articles/<%= article.id %>/comment" method="POST" class="d-inline">
+                    <div class="form-outline mb-4">
+                      <input type="text" id="comments" placeholder="write your comments" name='comments'
+                        required class="form-control form-control-lg" />
+                    </div>
+                    <!-- Submit button -->
+                    <button type="submit" class="btn btn-primary btn-lg btn-block" required>post comments</button>
+                  </form>
+                </div>
+            <% }) %>
+            <% } else { %>
+                No posts found.
+            <% } %>
+        </div>
+    </div>  
+</body>
+</html>
